@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <strong><p class="font-italic"> <a class="navbar-brand" href="#" >User Authentication</a></p></strong>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon" ></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav"  >
+    <ul class="navbar-nav" lang="10x">
+      <li class="nav-item ">
+        <a class="nav-link" href="/home" >Home </a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="/dashboard">DashBoard</a>
+      </li>
+      
+      <li class="nav-item ">
+        <a class="nav-link" href="/login">Login</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="#">Course</a>
+      </li>
+
+    </ul>
+    
+  <%if( data.name){%>
+    <h4>welcome to...</h4>   
+    <h4><strong><div class="text-nowrap bd-highlight" style="width: 8rem;">
+      <%=data.name%>
+    </div></strong></h4>
+  </div>
+  <strong><h4><a href="/logout">Logout</a></h4></strong>
+    <%}else{%>
+  <strong><h4><a href="/">Register</a></h4></strong>
+  <%}%>
+
+</nav>
