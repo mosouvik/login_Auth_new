@@ -14,7 +14,8 @@ if (req.user) {
         if (!err) {
            res.render('dashboard',{
             data:req.user,
-            details:userdetail
+            details:userdetail,
+
            }) 
         } else {
             console.log(err);
@@ -65,6 +66,7 @@ const login_create=(req,res)=>{
     User.findOne({
         email: req.body.email
     }, (err, data) => {
+       
         if (data) {
             console.log(data);
             const haspassword = data.password;
@@ -81,13 +83,14 @@ const login_create=(req,res)=>{
                 console.log(data)
                 res.redirect('/dashboard')    
             } else {
-                req.flash('message2', "Invalide Password");
+                req.flash('message2', "Password Incorrect");
                 res.redirect('/login')
             }
         } else {
-            req.flash('message2', "Invalide Email");
+            req.flash('message2', "No User found with thet email");
             res.redirect('/login')
         }
+       
     })
 }
 
@@ -95,6 +98,7 @@ const login_create=(req,res)=>{
     if (req.user) {
         console.log(req.user);
         next();
+        
     } else {
         console.log(req.user);
         req.flash('message2', "Can NOT access this page.....");
