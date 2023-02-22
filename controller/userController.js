@@ -2,32 +2,53 @@ const User=require('../model/user')
 const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
 
+userAuth=(req,res,next)=>{
+    if (req.user) {
+        console.log(req.user);
+        next();
+        
+    } else {
+        console.log(req.user);
+        req.flash('message2', "Can NOT access this page.....");
+        res.redirect('/login')
+
+    }
+}
+
 const home=(req,res)=>{
+
     res.render('home',{
+         data:req.user,
        
     })
 }
 
-const dashboard=(req,res)=>{
-if (req.user) {
-    User.find({},function(err,userdetail){
-        if (!err) {
-           res.render('dashboard',{
-            data:req.user,
-            details:userdetail,
+const about=(req,res)=>{
+    res.render('About',{
+        data:req.user,
+    })     
 
-           }) 
-        } else {
-            console.log(err);
-        }
-    })
 }
+
+const dashboard=(req,res)=>{
+    res.render('dashboard',{
+        data:req.user,
+    })     
+
+}
+const product=(req,res)=>{
+    res.render('Product',{
+        data:req.user,
+    })     
+
 }
 
 const register=(req,res)=>{
     res.render('register',{
         message2: req.flash('message2'),
-        
+        data:req.user,
+        // data:User.find()
+
     })
 }
 
@@ -52,12 +73,11 @@ const login=(req,res)=>{
     loginData = {}
     loginData.email = (req.cookies.email) ? req.cookies.email : undefined
     loginData.password = (req.cookies.password) ? req.cookies.password : undefined
-   
-
     res.render('login',{
         message: req.flash('message'),
         message2: req.flash('message2'),
-        data:loginData,
+        data1:loginData,
+        data:req.user,
     })
 }
 
@@ -94,18 +114,7 @@ const login_create=(req,res)=>{
     })
 }
 
- userAuth=(req,res,next)=>{
-    if (req.user) {
-        console.log(req.user);
-        next();
-        
-    } else {
-        console.log(req.user);
-        req.flash('message2', "Can NOT access this page.....");
-        res.redirect('/login')
-
-    }
-}
+ 
 
 const logout=(req,res)=>{
     res.clearCookie("userToken");
@@ -114,12 +123,15 @@ const logout=(req,res)=>{
 
 
 module.exports={
-register,
-register_create,
-login,
-login_create,
-dashboard,
-userAuth,
-logout,
-home
+ register,
+ register_create,
+ login,
+ login_create,
+ dashboard,
+ userAuth,
+ logout,
+home,
+about,
+product,
+
 }
